@@ -34,7 +34,7 @@ def User_Auth():
     return render_template('index.html')
 
 
-@ app.route('/SignUp', methods=["GET", "POST"])
+@app.route('/SignUp', methods=["GET", "POST"])
 def SignUp_Auth():
 
     if request.method == "POST":
