@@ -48,10 +48,10 @@
 
     <div class="container" style="margin-top: 3rem;">
         <h1 style="margin-bottom: 2rem;">Sign-Up</h1>
-        <form action="/SignUp">
+        <form action="/SignUp" method="POST">
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Enter your full name</label>
-                <input type="email" class="form-control" name="user_name" id="user_name" aria-describedby="emailHelp"
+                <label class="form-label">Enter your full name</label>
+                <input type="text" class="form-control" name="user_name" id="user_name" aria-describedby="emailHelp"
                     placeholder="eg. Robert Smith">
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
@@ -62,21 +62,23 @@
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="user_password" name="user_password"
-                    placeholder="minimum 8 characters">
+                <input type="password" class="form-control" id="user_password" placeholder="minimum 8 characters">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1"
+                <input type="password" class="form-control" id="confirm_user_password" name="user_password"
                     placeholder="minimum 8 characters">
             </div>
-            <!-- <button class="btn btn-dark"
-                style="position: absolute; top: 25rem; left: 47rem; padding-left: 5rem; padding-right: 5rem;">Login</button> -->
+            <button class="btn btn-dark"
+                style="position: absolute; top: 36rem; left: 47rem; padding-left: 5rem; padding-right: 5rem;"
+                type="submit">
+                <h6 style="font-weight: bold; color: rgb(27, 189, 211);">SignUp</h6>
+            </button>
         </form>
 
-        <div class="nav-next" id="next">
+        <!-- <div class="nav-next" id="next">
             <img src="../static/arrow_next_nav.jpg" style="position: absolute; left: 75rem; top: 37rem;">
-        </div>
+        </div> -->
 
     </div>
 
