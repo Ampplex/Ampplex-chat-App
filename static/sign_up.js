@@ -1,3 +1,5 @@
+// import { Redirect } from "../static/index";
+
 class Redirect {
   redirectToSignUpPage() {
     // Redirecting to SignUp Page
@@ -29,18 +31,26 @@ class Display {
     msg.innerHTML = InnerHtml;
     setTimeout(() => {
       msg.InnerHtml = "";
-    }, 5000);
+    }, 2000);
   }
 }
 
-const SignUpBtnHandler = () => {
+const SignUpBtnHandler = (e) => {
   // Verifying both the passwords
   let display = new Display();
   if (password.value != confirm_password.value) {
+    // alert("password and confirm password must be same");
     display.showMessage("danger", "password and confirm password must be same");
+  } else if (password.value.length < 8 && confirm_password.value.length < 8) {
+    display.showMessage(
+      "danger",
+      "password length must be more than 8 characters"
+    );
   } else {
+    // alert("success", "Signed-Up successfully!");
     display.showMessage("success", "Signed-Up successfully!");
   }
+  e.preventDefault();
 };
 
 const AppBrand = document.getElementById("App-Brand");
@@ -53,4 +63,4 @@ let redirect = new Redirect();
 
 AppBrand.addEventListener("click", redirect.redirectToLoginPage);
 home_page.addEventListener("click", redirect.redirectToLoginPage);
-SignUpBtn.addEventListener("click", SignUpBtnHandler);
+// SignUpBtn.addEventListener("submit", SignUpBtnHandler);
