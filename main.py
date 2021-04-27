@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import pyttsx3
-
+import requests
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.dp"
@@ -13,11 +14,19 @@ def speak(audio):
     pyttsx3.speak(audio)
 
 
+def Fetch_CountryName():
+    # Fetching Country Name using user's ip address
+
+    resp = requests.get('http://ip-api.com/json')
+    return resp.json()['country']
+
+
 class Ampplex_UserAuthentication(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String(200), nullable=False)
     user_email_id = db.Column(db.String(200), nullable=False)
     user_password = db.Column(db.String(200), nullable=False)
+    country_name = db.Column(db.String(300), nullable=False)
 
     def __repr__(self) -> str:
         return f"[{self.sno} , {self.user_name} , {self.user_email_id} , {self.user_password}]"
@@ -93,3 +102,4 @@ def SignUp_Auth():
 
 if __name__ == '__main__':
     app.run(debug=True, port=1010)
+    print(Fetch_CountryName())
