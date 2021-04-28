@@ -58,9 +58,16 @@ const home_page = document.getElementById("home");
 const password = document.getElementById("user_password");
 const confirm_password = document.getElementById("confirm_user_password");
 const SignUpBtn = document.getElementById("SignUp-Btn");
+const progress_bar = document.getElementById("progress_bar");
 
 let redirect = new Redirect();
 
 AppBrand.addEventListener("click", redirect.redirectToLoginPage);
 home_page.addEventListener("click", redirect.redirectToLoginPage);
-// SignUpBtn.addEventListener("submit", SignUpBtnHandler);
+SignUpBtn.addEventListener("click", function () {
+  progress_bar.innerHTML = `
+          <div class="progress"
+          style=" animation-name: ProgressAnimation; animation-duration: 8s; animation-iteration-count: 1;">
+        </div>
+  `;
+});

@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import pyttsx3
 import requests
 import json
+import socket
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.dp"
@@ -12,6 +13,10 @@ db = SQLAlchemy(app)
 
 def speak(audio):
     pyttsx3.speak(audio)
+
+
+def HostName():
+    return socket.gethostname()
 
 
 def Fetch_CountryName():
@@ -27,9 +32,10 @@ class Ampplex_UserAuthentication(db.Model):
     user_email_id = db.Column(db.String(200), nullable=False)
     user_password = db.Column(db.String(200), nullable=False)
     country_name = db.Column(db.String(300), nullable=False)
+    host_name = db.Column(db.String(300), nullable=False)
 
     def __repr__(self) -> str:
-        return f"[{self.sno} , {self.user_name} , {self.user_email_id} , {self.user_password}]"
+        return f"[{self.sno} , {self.user_name} , {self.user_email_id} , {self.country_name} , {self.user_password}, {self.host_name}]"
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -69,6 +75,8 @@ def SignUp_Auth():
         email_id = request.form['user_email_id']
         password = request.form['user_password']
         confirm_password = request.form['confirm_user_password']
+        country_name = Fetch_CountryName()
+        host_name = HostName()
 
         if name != "" and email_id != "" and password != "":
 
@@ -90,7 +98,7 @@ def SignUp_Auth():
                 InnerHtml = Display(type_msg, displayMsg)
 
             User_Info = Ampplex_UserAuthentication(
-                user_name=name, user_email_id=email_id, user_password=password)
+                user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=host_name)
             db.session.add(User_Info)
             db.session.commit()
 
@@ -102,4 +110,3 @@ def SignUp_Auth():
 
 if __name__ == '__main__':
     app.run(debug=True, port=1010)
-    print(Fetch_CountryName())

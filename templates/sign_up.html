@@ -46,6 +46,9 @@
         </nav>
     </div>
 
+    <div class="progress-bar" id="progress_bar">
+    </div>
+
     <div class="message" id="message">
         {{InnerHtml}}
 
@@ -109,6 +112,20 @@
             crossorigin="anonymous"></script>
 
         <script src="../static/sign_up.js"></script>
+
+        <style>
+            @keyframes ProgressAnimation {
+                from {
+                    width: 10px;
+                    height: 2px;
+                }
+
+                to {
+                    width: 100%;
+                    height: 2px;
+                }
+            }
+        </style>
 
 </body>
 
