@@ -21,9 +21,10 @@ import pyttsx3
 import requests
 import json
 import socket
+from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.dp"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -34,6 +35,10 @@ def speak(audio):
 
 def HostName():
     return socket.gethostname()
+
+
+def getDateTime():
+    return datetime.today().date()
 
 
 def Fetch_CountryName():
@@ -50,20 +55,22 @@ class Ampplex_UserAuthentication(db.Model):
     user_password = db.Column(db.String(200), nullable=False)
     country_name = db.Column(db.String(300), nullable=False)
     host_name = db.Column(db.String(300), nullable=False)
+    dateUserJoined = db.Column(db.String(100), nullable=False)
 
     def __repr__(self) -> str:
-        return f"{self.sno} , {self.user_name} , {self.user_email_id} , {self.country_name} , {self.user_password}, {self.host_name}"
+        return f"{self.sno} , {self.user_name} , {self.user_email_id} , {self.country_name} , {self.user_password}, {self.host_name}, {self.dateUserJoined}"
 
 
 @app.route('/', methods=['GET', 'POST'])
 def User_Auth():
 
+    FoundSno = 0  # Storing the Sno of the user to use the data in the chat app after login
+    USER_DATA = Ampplex_UserAuthentication.query.all()
     if request.method == "POST":
         email_id = request.form['user_email_id'].strip()
         password = request.form['user_password'].strip()
-        USER_DATA = Ampplex_UserAuthentication.query.all()
 
-        # Scaning the data base to ensure that the email-Id and Pass
+        # Scaning the database to ensure that the email-Id and Password are correct
         if email_id != "" and password != "":
             for i in range(len(USER_DATA)):
                 email_id_retrieved = str(USER_DATA[i]).split(',')[2]
@@ -72,6 +79,7 @@ def User_Auth():
                 if email_id_retrieved.strip() == email_id:
                     flag_EmailFound = True
                     if password_retrieved.strip() == password:
+                        FoundSno = i+1
                         speak("Successfully Logined")
                         print("[NEW USER SUCCESSFULLY LOGINED]")
                         return redirect('/chatroom')
@@ -86,27 +94,10 @@ def User_Auth():
     return render_template('index.html')
 
 
-def Display(type_msg, displayMsg):
-    # boldText
-    if type_msg == "success":
-        boldText = "Success!"
-    elif type_msg == "danger":
-        boldText = "Error!"
-    else:
-        raise ValueError("Value of type_msg must be success or danger")
-
-    InnerHtml = f"""
-                                     <div class="alert alert-{type_msg} alert-dismissible fade show" role="alert">
-                                        <strong>{boldText}</strong> {displayMsg}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-                """
-    return InnerHtml
-
-
 @app.route('/SignUp', methods=["GET", "POST"])
 def SignUp_Auth():
-    InnerHtml = ""
+    USER_DATA = Ampplex_UserAuthentication().query.all()
+
     if request.method == "POST":
         name = request.form['user_name']
         email_id = request.form['user_email_id']
@@ -114,40 +105,29 @@ def SignUp_Auth():
         confirm_password = request.form['confirm_user_password']
         country_name = Fetch_CountryName()
         host_name = HostName()
-
         if name != "" and email_id != "" and password != "":
-
-            if password != confirm_password:
-                type_msg = "danger"
-                displayMsg = "password and confirm password must be same"
-                InnerHtml = Display(type_msg, displayMsg)
-
-            elif len(password) < 8 and len(confirm_password) < 8:
-                type_msg = "danger"
-                displayMsg = "password length must be atleast 8 characters"
-
-                InnerHtml = Display(type_msg, displayMsg)
-
-            elif len(password) >= 8 and len(confirm_password) >= 8 and password == confirm_password:
-                type_msg = "success"
-                displayMsg = "password length must be atleast 8 characters"
-
-                InnerHtml = Display(type_msg, displayMsg)
-            if len(password) >= 8:
+            if email_id in USER_DATA:
+                speak(f'{email_id} already exist please use a different Email-ID')
+                return render_template('sign_up.html')
+            elif len(password) >= 8:
                 User_Info = Ampplex_UserAuthentication(
-                    user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=host_name)
+                    user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=host_name, dateUserJoined=getDateTime())
                 db.session.add(User_Info)
                 db.session.commit()
+                print("[NEW USER SUCCESSFULLY SIGNED-UP]")
+                return redirect('/')
 
-        Data = Ampplex_UserAuthentication.query.all()
-        print(Data)
-
-    return render_template('sign_up.html', InnerHtml=InnerHtml)
+    return render_template('sign_up.html')
 
 
 @app.route('/chatroom')
 def ChatRoom():
     return render_template('chatroom.html')
+
+
+@app.route('/MyProfile')
+def MyProfile():
+    return render_template('user_profile.html')
 
 
 if __name__ == '__main__':

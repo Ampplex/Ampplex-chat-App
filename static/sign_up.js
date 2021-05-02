@@ -49,6 +49,8 @@ class Display {
   }
 }
 
+// const LoginBtnHandler = () => {};
+
 const SignUpBtnHandler = (e) => {
   // Verifying both the passwords
   let display = new Display();
@@ -73,6 +75,7 @@ const password = document.getElementById("user_password");
 const confirm_password = document.getElementById("confirm_user_password");
 const SignUpBtn = document.getElementById("SignUp-Btn");
 const progress_bar = document.getElementById("progress_bar");
+const LoginBtn = document.getElementById("Login-Btn");
 
 let redirect = new Redirect();
 

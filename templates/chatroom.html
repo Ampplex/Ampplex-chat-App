@@ -11,17 +11,37 @@
 </head>
 
 <body>
-    <!-- <h1>Welcome to Ampplex Chat App</h1> -->
-    <div class="shadow p-3 mb-5 bg-body rounded" style="height: 80px;">
+    <div class="shadow p-3 mb-5 bg-body rounded" style="height: 90px;">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Enter user name" aria-label="Enter user name"
-                aria-describedby="basic-addon2" style="position: absolute; width: 20%; top: 10px; left: 1rem;"
-                id="searchUsers">
-            <span class="input-group-text" id="searchUsersBtn"
+            <input type="text" class="form-control" placeholder="Search for users" aria-label="Search for users"
+                aria-describedby="basic-addon2"
+                style="position: absolute; width: 20%; top: 10px; left: 1rem; border-radius: 100px;" id="searchUsers">
+            <!-- <span class="input-group-text" id="searchUsersBtn"
                 style="width: 10; position: absolute; left: 331px; top: 10px;">search for
-                users</span>
+                users</span> -->
         </div>
+        <label class="form-label"
+            style="position: absolute; left: 1410px; color: grey; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"
+            id="MyProfile-Btn">My
+            profile</label>
+        <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+            class="avatar"
+            style="border-radius: 50%; width: 70px; height: 70px; position: absolute; left: 93rem; top: 13px;"
+            draggable="false">
     </div>
+
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+        integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+        crossorigin="anonymous"></script>
+    <script src="../static/chat_room.js"></script>
 </body>
 
 </html>
