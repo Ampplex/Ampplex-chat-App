@@ -84,7 +84,7 @@ home_page.addEventListener("click", redirect.redirectToLoginPage);
 SignUpBtn.addEventListener("click", function () {
   progress_bar.innerHTML = `
           <div class="progress"
-          style=" animation-name: ProgressAnimation; animation-duration: 8s; animation-iteration-count: 1;">
+          style=" animation-name: ProgressAnimation; animation-duration: 9s; animation-iteration-count: infinite;">
         </div>
   `;
   SignUpBtnHandler();

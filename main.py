@@ -27,6 +27,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+CURRENT_USER_INDEX = -1
 
 
 def speak(audio):
@@ -70,7 +71,7 @@ def User_Auth():
         email_id = request.form['user_email_id'].strip()
         password = request.form['user_password'].strip()
 
-        # Scaning the database to ensure that the email-Id and Password are correct
+        # Scanning the database to ensure that the email-Id and Password are correct
         if email_id != "" and password != "":
             for i in range(len(USER_DATA)):
                 email_id_retrieved = str(USER_DATA[i]).split(',')[2]
@@ -80,6 +81,8 @@ def User_Auth():
                     flag_EmailFound = True
                     if password_retrieved.strip() == password:
                         FoundSno = i+1
+                        # Assigning the sno of the logined user to CURRENT_USER_INDEX
+                        CURRENT_USER_INDEX = i
                         speak("Successfully Logined")
                         print("[NEW USER SUCCESSFULLY LOGINED]")
                         return redirect('/chatroom')
@@ -122,7 +125,8 @@ def SignUp_Auth():
 
 @app.route('/chatroom')
 def ChatRoom():
-    return render_template('chatroom.html')
+    # CURRENT_USER_INDEX is the sr no. of the user so that the data of the user could be retrieved
+    return render_template('chatroom.html', userIndex=CURRENT_USER_INDEX)
 
 
 @app.route('/MyProfile')
