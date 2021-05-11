@@ -65,7 +65,7 @@ class Ampplex_UserAuthentication(db.Model):
 @app.route('/', methods=['GET', 'POST'])
 def User_Auth():
 
-    FoundSno = 0  # Storing the Sno of the user to use the data in the chat app after login
+    # FoundSno = 0  # Storing the Sno of the user to use the data in the chat app after login
     USER_DATA = Ampplex_UserAuthentication.query.all()
     if request.method == "POST":
         email_id = request.form['user_email_id'].strip()
@@ -80,9 +80,10 @@ def User_Auth():
                 if email_id_retrieved.strip() == email_id:
                     flag_EmailFound = True
                     if password_retrieved.strip() == password:
-                        FoundSno = i+1
+                        # FoundSno = i+1
                         # Assigning the sno of the logined user to CURRENT_USER_INDEX
-                        CURRENT_USER_INDEX = i
+                        global CURRENT_USER_INDEX
+                        CURRENT_USER_INDEX = i+1
                         speak("Successfully Logined")
                         print("[NEW USER SUCCESSFULLY LOGINED]")
                         return redirect('/chatroom')
