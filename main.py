@@ -31,7 +31,12 @@ CURRENT_USER_INDEX = -1
 
 
 def speak(audio):
+    engine = pyttsx3.init('sapi5')
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[1].id)
     pyttsx3.speak(audio)
+    engine.say(audio)
+    engine.runAndWait()
 
 
 def HostName():
@@ -67,6 +72,9 @@ def User_Auth():
 
     # FoundSno = 0  # Storing the Sno of the user to use the data in the chat app after login
     USER_DATA = Ampplex_UserAuthentication.query.all()
+    for i in range(len(USER_DATA)):
+        USER_DATA[i] = str(USER_DATA[i]).split(',')
+
     if request.method == "POST":
         email_id = request.form['user_email_id'].strip()
         password = request.form['user_password'].strip()
@@ -74,8 +82,8 @@ def User_Auth():
         # Scanning the database to ensure that the email-Id and Password are correct
         if email_id != "" and password != "":
             for i in range(len(USER_DATA)):
-                email_id_retrieved = str(USER_DATA[i]).split(',')[2]
-                password_retrieved = str(USER_DATA[i]).split(',')[4]
+                email_id_retrieved = USER_DATA[i][2]
+                password_retrieved = USER_DATA[i][4]
                 flag_EmailFound = False
                 if email_id_retrieved.strip() == email_id:
                     flag_EmailFound = True
@@ -86,7 +94,11 @@ def User_Auth():
                         CURRENT_USER_INDEX = i+1
                         speak("Successfully Logined")
                         print("[NEW USER SUCCESSFULLY LOGINED]")
-                        return redirect('/chatroom')
+                        try:
+                            return redirect('/chatroom')
+                        except:
+                            speak(
+                                'Some error occured! while trying to redirect to chatroom')
                     else:
                         speak("Error: password or email id must be valid and correct")
 
@@ -126,13 +138,13 @@ def SignUp_Auth():
 
 @app.route('/chatroom')
 def ChatRoom():
-    # CURRENT_USER_INDEX is the sr no. of the user so that the data of the user could be retrieved
-    return render_template('chatroom.html', userIndex=CURRENT_USER_INDEX)
+    return render_template('chatroom.html', UserData=Ampplex_UserAuthentication.query.all())
 
 
 @app.route('/MyProfile')
 def MyProfile():
-    return render_template('user_profile.html')
+    # CURRENT_USER_INDEX is the sr no. of the user so that the data of the user could be retrieved
+    return render_template('user_profile.html', userInfo=Ampplex_UserAuthentication.query.all()[CURRENT_USER_INDEX])
 
 
 if __name__ == '__main__':

@@ -16,18 +16,14 @@ class Redirect {
 }
 
 // Connecting to user_info db
-const sqlite3 = require("sqlite3").verbose();
+// const sqlite3 = require("sqlite3").verbose();
 
-let db = new sqlite3.Database("./user_info.db", (err) => {
-  if (err) {
-    console.log(err.message);
-  }
-  console.log("Connected to the user_info.db");
-});
-
-let user_sno = document.querySelector(".user_sno").id;
-
-console.log(`User sno is ${user_sno}`);
+// let db = new sqlite3.Database("./user_info.db", (err) => {
+//   if (err) {
+//     console.log(err.message);
+//   }
+//   console.log("Connected to the user_info.db");
+// });
 
 let redirect = new Redirect();
 

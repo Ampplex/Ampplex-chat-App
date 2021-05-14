@@ -16,15 +16,23 @@
             <input type="text" class="form-control" placeholder="Search for users" aria-label="Search for users"
                 aria-describedby="basic-addon2"
                 style="position: absolute; width: 20%; top: 10px; left: 1rem; border-radius: 100px;" id="searchUsers">
-            <!-- <span class="input-group-text" id="searchUsersBtn"
-                style="width: 10; position: absolute; left: 331px; top: 10px;">search for
-                users</span> -->
+
         </div>
         <p class="user_sno" id={{userIndex}} style="color: white;"></p>
         <label class="form-label"
             style="position: absolute; left: 1410px; color: grey; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"
             id="MyProfile-Btn">My
             profile</label>
+        <div class="user" style="margin-top: 6rem;">
+            {% for individual in UserData %}
+            <div class="shadow p-3 mb-5 bg-body rounded" id={{individual.sno}}
+                style="width: 50%; display: flex; align-self: center; margin-left: 4rem;">
+                <h6>{{individual.user_name}}</h6>
+                <h6 style="font-weight: bold; font-size: 27; margin-top: 2rem; margin-right: 4rem;">.
+                    {{individual.country_name}}</h6>
+            </div>
+            {% endfor %}
+        </div>
         <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
             class="avatar"
             style="border-radius: 50%; width: 70px; height: 70px; position: absolute; left: 93rem; top: 13px;"
