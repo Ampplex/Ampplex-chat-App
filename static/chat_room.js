@@ -16,6 +16,9 @@ class Redirect {
   redirectToFriendPage() {
     location.href = "http://127.0.0.1:1010/Friend";
   }
+  redirectToChatroom() {
+    location.href = "http://127.0.0.1:1010/chatroom";
+  }
 }
 
 let redirect = new Redirect();
