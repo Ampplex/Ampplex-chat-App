@@ -22,6 +22,7 @@ import requests
 import json
 import socket
 from datetime import datetime
+from random import randint
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.db"
@@ -62,9 +63,10 @@ class Ampplex_UserAuthentication(db.Model):
     country_name = db.Column(db.String(300), nullable=False)
     host_name = db.Column(db.String(300), nullable=False)
     dateUserJoined = db.Column(db.String(100), nullable=False)
+    uniqueId = db.Column(db.String(100), nullable=False)
 
     def __repr__(self) -> str:
-        return f"{self.sno} , {self.user_name} , {self.user_email_id} , {self.country_name} , {self.user_password}, {self.host_name}, {self.dateUserJoined}"
+        return f"{self.sno} , {self.user_name} , {self.user_email_id} , {self.country_name} , {self.user_password}, {self.host_name}, {self.dateUserJoined}, {self.uniqueId}"
 
 
 def splitUserData(USER_DATA):
@@ -118,7 +120,7 @@ def User_Auth():
 def SignUp_Auth():
     USER_DATA = Ampplex_UserAuthentication().query.all()
     splitUserData(USER_DATA)
-
+    uniqueId = randint(len(USER_DATA)*10, len(USER_DATA)*1000)
     if request.method == "POST":
         name = request.form['user_name']
         email_id = request.form['user_email_id']
@@ -132,9 +134,10 @@ def SignUp_Auth():
                 return render_template('sign_up.html')
             elif len(password) >= 8:
                 User_Info = Ampplex_UserAuthentication(
-                    user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=host_name, dateUserJoined=getDateTime())
+                    user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=host_name, dateUserJoined=getDateTime(), uniqueId=uniqueId)
                 db.session.add(User_Info)
                 db.session.commit()
+                print(Ampplex_UserAuthentication.query.all())
                 print("[NEW USER SUCCESSFULLY SIGNED-UP]")
                 return redirect('/')
 
