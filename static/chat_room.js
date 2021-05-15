@@ -13,6 +13,9 @@ class Redirect {
   redirectToUserProfile() {
     location.href = "http://127.0.0.1:1010/MyProfile";
   }
+  redirectToFriendPage() {
+    location.href = "http://127.0.0.1:1010/Friend";
+  }
 }
 
 let redirect = new Redirect();

@@ -71,6 +71,7 @@ def splitUserData(USER_DATA):
     # FoundSno = 0  # Storing the Sno of the user to use the data in the chat app after login
     for i in range(len(USER_DATA)):
         USER_DATA[i] = str(USER_DATA[i]).split(',')
+    return USER_DATA
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -142,13 +143,22 @@ def SignUp_Auth():
 
 @app.route('/chatroom')
 def ChatRoom():
-    return render_template('chatroom.html', UserData=Ampplex_UserAuthentication.query.all())
+    # Removing the user logined to give proper recommendation
+    USER_DATA = Ampplex_UserAuthentication().query.all()
+    USER_DATA.remove(USER_DATA[CURRENT_USER_INDEX])
+
+    return render_template('chatroom.html', UserData=USER_DATA)
 
 
 @app.route('/MyProfile')
 def MyProfile():
     # CURRENT_USER_INDEX is the sr no. of the user so that the data of the user could be retrieved
     return render_template('user_profile.html', userInfo=Ampplex_UserAuthentication.query.all()[CURRENT_USER_INDEX])
+
+
+@app.route('/Friend')
+def Friend():
+    return render_template('friend.html')
 
 
 if __name__ == '__main__':

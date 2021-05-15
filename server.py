@@ -42,6 +42,7 @@ def handle_client(conn, addr):
             msg = conn.recv(msg_length).decode(FORMAT)
             if msg == DISCONNECT_MESSAGE:
                 connected = False
+
             Message = msg.split()
             if '@' not in Message:
                 with open("user_names.txt", "a") as user_name:
