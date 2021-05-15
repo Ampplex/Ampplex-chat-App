@@ -67,31 +67,34 @@ class Ampplex_UserAuthentication(db.Model):
         return f"{self.sno} , {self.user_name} , {self.user_email_id} , {self.country_name} , {self.user_password}, {self.host_name}, {self.dateUserJoined}"
 
 
+def splitUserData(USER_DATA):
+    # FoundSno = 0  # Storing the Sno of the user to use the data in the chat app after login
+    for i in range(len(USER_DATA)):
+        USER_DATA[i] = str(USER_DATA[i]).split(',')
+
+
 @app.route('/', methods=['GET', 'POST'])
 def User_Auth():
 
-    # FoundSno = 0  # Storing the Sno of the user to use the data in the chat app after login
     USER_DATA = Ampplex_UserAuthentication.query.all()
-    for i in range(len(USER_DATA)):
-        USER_DATA[i] = str(USER_DATA[i]).split(',')
+    splitUserData(USER_DATA)
 
     if request.method == "POST":
         email_id = request.form['user_email_id'].strip()
         password = request.form['user_password'].strip()
 
         # Scanning the database to ensure that the email-Id and Password are correct
+        flag_EmailFound = False
         if email_id != "" and password != "":
             for i in range(len(USER_DATA)):
                 email_id_retrieved = USER_DATA[i][2]
                 password_retrieved = USER_DATA[i][4]
-                flag_EmailFound = False
                 if email_id_retrieved.strip() == email_id:
                     flag_EmailFound = True
                     if password_retrieved.strip() == password:
-                        # FoundSno = i+1
                         # Assigning the sno of the logined user to CURRENT_USER_INDEX
                         global CURRENT_USER_INDEX
-                        CURRENT_USER_INDEX = i+1
+                        CURRENT_USER_INDEX = i
                         speak("Successfully Logined")
                         print("[NEW USER SUCCESSFULLY LOGINED]")
                         try:
@@ -113,6 +116,7 @@ def User_Auth():
 @app.route('/SignUp', methods=["GET", "POST"])
 def SignUp_Auth():
     USER_DATA = Ampplex_UserAuthentication().query.all()
+    splitUserData(USER_DATA)
 
     if request.method == "POST":
         name = request.form['user_name']

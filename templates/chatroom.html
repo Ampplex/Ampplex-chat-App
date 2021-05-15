@@ -10,34 +10,55 @@
     <title>Ampplex Chat App</title>
 </head>
 
-<body>
+<body style="background-color: #FAFAFA;">
     <div class="shadow p-3 mb-5 bg-body rounded" style="height: 90px;">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Search for users" aria-label="Search for users"
                 aria-describedby="basic-addon2"
-                style="position: absolute; width: 20%; top: 10px; left: 1rem; border-radius: 100px;" id="searchUsers">
+                style="position: absolute; width: 20%; top: 10px; left: 1rem; border-radius: 200px;" id="searchUsers">
 
         </div>
-        <p class="user_sno" id={{userIndex}} style="color: white;"></p>
-        <label class="form-label"
-            style="position: absolute; left: 1410px; color: grey; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"
-            id="MyProfile-Btn">My
-            profile</label>
+        <p class="user_sno" id={{userIndex}} style="color: rgb(255, 255, 255);"></p>
+        <h3 style="position: absolute; left: 50rem; top: 18px;">Ampplex </h3>
+        <div class="profile" id="MyProfile-Btn">
+            <label class="form-label"
+                style="position: absolute; left: 1410px; color: grey; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">My
+                profile</label>
+            <img src=" https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+                class="avatar"
+                style="border-radius: 50%; width: 70px; height: 70px; position: absolute; left: 93rem; top: 13px;"
+                draggable="false">
+        </div>
         <div class="user" style="margin-top: 6rem;">
             {% for individual in UserData %}
-            <div class="shadow p-3 mb-5 bg-body rounded" id={{individual.sno}}
-                style="width: 50%; display: flex; align-self: center; margin-left: 4rem;">
-                <h6>{{individual.user_name}}</h6>
-                <h6 style="font-weight: bold; font-size: 27; margin-top: 2rem; margin-right: 4rem;">.
+            <div class="shadow p-3 mb-3 bg-body rounded" id={{individual.sno}}
+                style="width: 50%; display: flex; align-self: center; margin-left: 10rem; animation-name: AnimateUsers; animation-duration: 1.6s; animation-iteration-count: 1;">
+                <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+                    width="10%" height="10%" style="border-radius: 30rem; margin-bottom: 1rem;">
+                <h6 style="margin-left: 1rem; margin-top: 1rem;">{{individual.user_name}}</h6>
+                <h6
+                    style=" font-weight: bold; font-size: 27; margin-top: 20px; margin-right: 20rem; margin-left: 20px;">
                     {{individual.country_name}}</h6>
             </div>
+
             {% endfor %}
         </div>
-        <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
-            class="avatar"
-            style="border-radius: 50%; width: 70px; height: 70px; position: absolute; left: 93rem; top: 13px;"
-            draggable="false">
+
     </div>
+
+    <style>
+        @keyframes AnimateUsers {
+            from {
+                margin-left: 1px;
+                opacity: 0.1;
+            }
+
+            to {
+                margin-left: 10rem;
+                opacity: 1;
+            }
+        }
+    </style>
 
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
