@@ -6,12 +6,8 @@ from plyer import notification
 HEADER = 64
 PORT = 5050
 
-# gethostbyname() converts computer name/host name to ip address
-# gethostname() returns the computer name/host name
-# SERVER = socket.gethostbyname(socket.gethostname())
 SERVER = socket.gethostname()
-# DESKTOP-C0IK9J8
-# print(SERVER)
+
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
