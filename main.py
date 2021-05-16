@@ -15,7 +15,7 @@ limitations under the License.
 """
 
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 import pyttsx3
 import requests
@@ -23,6 +23,9 @@ import json
 import socket
 from datetime import datetime
 from random import randint
+from time import sleep
+
+from sqlalchemy.orm import selectin_polymorphic
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.db"
@@ -83,6 +86,7 @@ def User_Auth():
     splitUserData(USER_DATA)
 
     if request.method == "POST":
+        # Retreving email and password
         email_id = request.form['user_email_id'].strip()
         password = request.form['user_password'].strip()
 
@@ -113,7 +117,7 @@ def User_Auth():
         elif email_id == "" and password == "":
             speak("Please enter the email-Id and password to login")
 
-    return render_template('index.html')
+    return render_template('index.html', userIndex=CURRENT_USER_INDEX)
 
 
 @app.route('/SignUp', methods=["GET", "POST"])
@@ -146,7 +150,7 @@ def SignUp_Auth():
 
 @app.route('/chatroom')
 def ChatRoom():
-    # Removing the user logined to give proper recommendation
+    # Removing the user logined from the recommendation to give proper recommendation
     USER_DATA = Ampplex_UserAuthentication().query.all()
     USER_DATA.remove(USER_DATA[CURRENT_USER_INDEX])
 
