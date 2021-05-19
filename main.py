@@ -160,7 +160,7 @@ def SignUp_Auth():
 def ChatRoom():
     # Removing the user logined from the recommendation to give proper recommendation
     USER_DATA = Ampplex_UserAuthentication().query.all()
-    # splitUserData(USER_DATA)
+
     user = session["user"]
     Index = user[0]
     USER_DATA.remove(USER_DATA[int(Index)-1])
@@ -170,8 +170,11 @@ def ChatRoom():
 
 @app.route('/MyProfile')
 def MyProfile():
-    user = session["user"]
-    return render_template('user_profile.html', userInfo=user)
+    if "user" in session:
+        user = session["user"]
+        return render_template('user_profile.html', userInfo=user)
+    else:
+        return redirect('/')
 
 
 @app.route('/Friend')
