@@ -15,19 +15,20 @@ limitations under the License.
 """
 
 
-from flask import Flask, render_template, request, redirect
+from re import U
+from flask import Flask, render_template, request, redirect, session
+from flask.helpers import url_for
 from flask_sqlalchemy import SQLAlchemy
 import pyttsx3
 import requests
 import json
 import socket
-from datetime import datetime
+from datetime import datetime, timedelta
 from random import randint
-from time import sleep
-
-from sqlalchemy.orm import selectin_polymorphic
 
 app = Flask(__name__)
+app.secret_key = "hello world"
+app.permanent_session_lifetime = timedelta(days=30)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -82,6 +83,9 @@ def splitUserData(USER_DATA):
 @app.route('/', methods=['GET', 'POST'])
 def User_Auth():
 
+    if "user" in session:
+        return redirect('/chatroom')
+
     USER_DATA = Ampplex_UserAuthentication.query.all()
     splitUserData(USER_DATA)
 
@@ -102,13 +106,17 @@ def User_Auth():
                         # Assigning the sno of the logined user to CURRENT_USER_INDEX
                         global CURRENT_USER_INDEX
                         CURRENT_USER_INDEX = i
+                        # session.permanent = True
+                        session["user"] = USER_DATA[i]
                         speak("Successfully Logined")
                         print("[NEW USER SUCCESSFULLY LOGINED]")
                         try:
                             return redirect('/chatroom')
-                        except:
+                            # return redirect('/chatroom', userinfo=Ampplex_UserAuthentication.query.all()[CURRENT_USER_INDEX])
+                        except Exception as e:
                             speak(
-                                'Some error occured! while trying to redirect to chatroom')
+                                'Some error occured while trying to redirect to chatroom')
+                            print(e)
                     else:
                         speak("Error: password or email id must be valid and correct")
 
@@ -152,15 +160,20 @@ def SignUp_Auth():
 def ChatRoom():
     # Removing the user logined from the recommendation to give proper recommendation
     USER_DATA = Ampplex_UserAuthentication().query.all()
-    USER_DATA.remove(USER_DATA[CURRENT_USER_INDEX])
+    # splitUserData(USER_DATA)
+    user = session["user"]
+    Index = user[0]
+    print(USER_DATA[int(Index)-1])
+    USER_DATA.remove(USER_DATA[int(Index)-1])
 
     return render_template('chatroom.html', UserData=USER_DATA)
 
 
 @app.route('/MyProfile')
 def MyProfile():
-    # CURRENT_USER_INDEX is the sr no. of the user so that the data of the user could be retrieved
-    return render_template('user_profile.html', userInfo=Ampplex_UserAuthentication.query.all()[CURRENT_USER_INDEX])
+    user = session["user"]
+    print("prof", user)
+    return render_template('user_profile.html', userInfo=user)
 
 
 @app.route('/Friend')

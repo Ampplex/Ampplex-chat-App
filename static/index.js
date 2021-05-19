@@ -14,6 +14,7 @@ let redirect = new Redirect();
 const SignUpBtn = document.getElementById("SignUp_nav");
 const AppBrand = document.getElementById("App-Brand");
 const home_page = document.getElementById("home");
+const loginBtn = document.getElementById("Login-Btn");
 
 SignUpBtn.addEventListener("click", redirect.redirectToSignUpPage);
 AppBrand.addEventListener("click", redirect.redirectToLoginPage);

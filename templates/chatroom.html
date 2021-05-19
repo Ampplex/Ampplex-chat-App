@@ -19,7 +19,7 @@
 
         </div>
         <p class="user_sno" id={{userIndex}} style="color: rgb(255, 255, 255);"></p>
-        <h3 style="position: absolute; left: 50rem; top: 18px;">Ampplex </h3>
+        <h3 style="position: absolute; left: 50rem; top: 18px;">Ampplex</h3>
         <div class="profile" id="MyProfile-Btn">
             <label class="form-label"
                 style="position: absolute; left: 1410px; color: grey; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">My
@@ -71,6 +71,9 @@
         integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
         crossorigin="anonymous"></script>
     <script src="../static/chat_room.js"></script>
+    <script>
+        localStorage.setItem("userIndex", "{{userinfo}}")
+    </script>
 </body>
 
 </html>

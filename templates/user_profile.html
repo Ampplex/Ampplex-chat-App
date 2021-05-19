@@ -36,15 +36,15 @@
     <div class="about">
         <h4 style="font-weight: bold; position: absolute; left: 49rem; top: 14rem;">About</h4>
         <h4 style="position: absolute; left: 47rem; top: 18rem; font-family: Arial, Helvetica, sans-serif">
-            {{userInfo.user_name}}</h4>
+            {{userInfo[1]}}</h4>
         <h4
             style="position: absolute; left: 47rem; top: 20rem; font-family: Arial, Helvetica, sans-serif; margin-top: 1rem;">
             Country
-            {{userInfo.country_name}}</h4>
+            {{userInfo[3]}}</h4>
         <h4
             style="position: absolute; top: 23rem; left: 47rem; font-family: Arial, Helvetica, sans-serifl; margin-top: 1rem;">
             Joined
-            {{userInfo.dateUserJoined}}</h4>
+            {{userInfo[6]}}</h4>
     </div>
 
     <style>
@@ -63,6 +63,9 @@
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
 
+    <!-- <script>
+
+    </script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
         integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
