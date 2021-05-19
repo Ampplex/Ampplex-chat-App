@@ -125,7 +125,7 @@ def User_Auth():
         elif email_id == "" and password == "":
             speak("Please enter the email-Id and password to login")
 
-    return render_template('index.html', userIndex=CURRENT_USER_INDEX)
+    return render_template('index.html')
 
 
 @app.route('/SignUp', methods=["GET", "POST"])
@@ -163,7 +163,6 @@ def ChatRoom():
     # splitUserData(USER_DATA)
     user = session["user"]
     Index = user[0]
-    print(USER_DATA[int(Index)-1])
     USER_DATA.remove(USER_DATA[int(Index)-1])
 
     return render_template('chatroom.html', UserData=USER_DATA)
@@ -172,7 +171,6 @@ def ChatRoom():
 @app.route('/MyProfile')
 def MyProfile():
     user = session["user"]
-    print("prof", user)
     return render_template('user_profile.html', userInfo=user)
 
 

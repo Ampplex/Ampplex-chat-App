@@ -9,7 +9,6 @@ class Redirect {
     // Redirecting to Login Page
     location.href = "http://127.0.0.1:1010/";
   }
-
   redirectToUserProfile() {
     location.href = "http://127.0.0.1:1010/MyProfile";
   }
@@ -33,8 +32,18 @@ function speak(audio) {
 }
 
 speak("Welcome to Ampplex Chat Room");
+
 let redirect = new Redirect();
 
 const Profile = document.getElementById("MyProfile-Btn");
 
 Profile.addEventListener("click", redirect.redirectToUserProfile);
+
+// Adding event lisner to all the user and redirecting them to friend.html
+
+const users = document.querySelector(".user");
+for (let i = 0; i < users.children.length; i++) {
+  users.children[i].addEventListener("click", () => {
+    redirect.redirectToFriendPage();
+  });
+}
