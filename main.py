@@ -80,6 +80,11 @@ def splitUserData(USER_DATA):
     return USER_DATA
 
 
+def Logout_User():
+    session.clear()
+    return redirect('/')
+
+
 @app.route('/', methods=['GET', 'POST'])
 def User_Auth():
 
@@ -160,18 +165,24 @@ def SignUp_Auth():
 def ChatRoom():
     # Removing the user logined from the recommendation to give proper recommendation
     USER_DATA = Ampplex_UserAuthentication().query.all()
+    if "user" in session:
+        user = session["user"]
+        Index = user[0]
+        USER_DATA.remove(USER_DATA[int(Index)-1])
 
-    user = session["user"]
-    Index = user[0]
-    USER_DATA.remove(USER_DATA[int(Index)-1])
-
-    return render_template('chatroom.html', UserData=USER_DATA)
+        return render_template('chatroom.html', UserData=USER_DATA)
+    else:
+        return redirect('/')
 
 
-@app.route('/MyProfile')
+@app.route('/MyProfile', methods=['GET', 'POST'])
 def MyProfile():
     if "user" in session:
         user = session["user"]
+        if request.method == 'POST':
+            if request.form.get('logout_user'):
+                Logout_User()
+
         return render_template('user_profile.html', userInfo=user)
     else:
         return redirect('/')
