@@ -15,9 +15,7 @@ limitations under the License.
 """
 
 
-from re import U
 from flask import Flask, render_template, request, redirect, session
-from flask.helpers import url_for
 from flask_sqlalchemy import SQLAlchemy
 import pyttsx3
 import requests
@@ -32,7 +30,6 @@ app.permanent_session_lifetime = timedelta(days=30)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-CURRENT_USER_INDEX = -1
 
 
 def speak(audio):
@@ -108,16 +105,12 @@ def User_Auth():
                 if email_id_retrieved.strip() == email_id:
                     flag_EmailFound = True
                     if password_retrieved.strip() == password:
-                        # Assigning the sno of the logined user to CURRENT_USER_INDEX
-                        global CURRENT_USER_INDEX
-                        CURRENT_USER_INDEX = i
-                        # session.permanent = True
+                        session.permanent = True
                         session["user"] = USER_DATA[i]
                         speak("Successfully Logined")
                         print("[NEW USER SUCCESSFULLY LOGINED]")
                         try:
                             return redirect('/chatroom')
-                            # return redirect('/chatroom', userinfo=Ampplex_UserAuthentication.query.all()[CURRENT_USER_INDEX])
                         except Exception as e:
                             speak(
                                 'Some error occured while trying to redirect to chatroom')
@@ -188,10 +181,11 @@ def MyProfile():
         return redirect('/')
 
 
-@app.route('/Friend')
-def Friend():
+@app.route('/Friend/<string:hostname>')
+def Friend(hostname):
+    print(hostname)
     return render_template('friend.html')
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=1010)
+    app.run(debug=True, host='0.0.0.0', port=5000)

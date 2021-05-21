@@ -17,11 +17,11 @@ limitations under the License.
 class Redirect {
   redirectToSignUpPage() {
     // Redirecting to SignUp Page
-    location.href = "http://127.0.0.1:1010/SignUp";
+    location.href = "http://192.168.0.5:5000/SignUp";
   }
   redirectToLoginPage() {
     // Redirecting to Login Page
-    location.href = "http://127.0.0.1:1010/";
+    location.href = "http://192.168.0.5:5000/";
   }
 }
 

@@ -31,7 +31,7 @@
         </div>
         <div class="user" style="margin-top: 6rem;">
             {% for individual in UserData %}
-            <div class="shadow p-3 mb-3 bg-body rounded" id={{individual.sno}}
+            <div class="shadow p-3 mb-3 bg-body rounded" id={{individual.host_name}}
                 style="width: 50%; display: flex; align-self: center; margin-left: 10rem; animation-name: AnimateUsers; animation-duration: 1.6s; animation-iteration-count: 1;">
                 <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
                     width="10%" height="10%" style="border-radius: 30rem; margin-bottom: 1rem;">
@@ -49,7 +49,7 @@
         @keyframes AnimateUsers {
             from {
                 margin-left: 1px;
-                opacity: 0.1;
+                opacity: 0;
             }
 
             to {
@@ -70,9 +70,58 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
         integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
         crossorigin="anonymous"></script>
-    <script src="../static/chat_room.js"></script>
+    <!-- <script src="../static/chat_room.js"></script> -->
     <script>
-        localStorage.setItem("userIndex", "{{userinfo}}")
+        class Redirect {
+            redirectToSignUpPage() {
+                // Redirecting to SignUp Page
+                location.href = "http://192.168.0.5:5000/SignUp";
+            }
+            redirectToLoginPage() {
+                // Redirecting to Login Page
+                location.href = "http://192.168.0.5:5000/";
+            }
+            redirectToUserProfile() {
+                location.href = "http://192.168.0.5:5000/MyProfile";
+            }
+            redirectToFriendPage(hostname) {
+                location.href = "http://192.168.0.5:5000/Friend/" + hostname;
+            }
+            redirectToChatroom() {
+                location.href = "http://192.168.0.5:5000/chatroom";
+            }
+        }
+
+        function speak(audio) {
+            let speech = new SpeechSynthesisUtterance();
+            speech.lang = "en-US";
+            speech.text = audio;
+            speech.volume = 1;
+            speech.rate = 1;
+            speech.pitch = 1;
+
+            window.speechSynthesis.speak(speech);
+        }
+
+        speak("Welcome to Ampplex Chat Room");
+
+        let redirect = new Redirect();
+
+        const Profile = document.getElementById("MyProfile-Btn");
+        Profile.addEventListener("click", redirect.redirectToUserProfile);
+
+        // Adding event lisner to all the user and redirecting them to friend.html
+        // console.log("{{UserData}}")
+        let userData = "{{UserData}}";
+        const users = document.querySelector(".user");
+        for (let i = 0; i < users.children.length; i++) {
+            users.children[i].addEventListener("click", () => {
+                // let index = Number(users.children[i].id);
+                // console.log(Array(userData));
+                redirect.redirectToFriendPage(users.children[i].id);
+            });
+        }
+
     </script>
 </body>
 
