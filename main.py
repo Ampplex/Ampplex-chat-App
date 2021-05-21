@@ -23,6 +23,8 @@ import json
 import socket
 from datetime import datetime, timedelta
 from random import randint
+from cryptography.fernet import Fernet
+
 
 app = Flask(__name__)
 app.secret_key = "hello world"
@@ -30,6 +32,7 @@ app.permanent_session_lifetime = timedelta(days=30)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+key = Fernet.generate_key()
 
 
 def speak(audio):
@@ -41,7 +44,7 @@ def speak(audio):
     engine.runAndWait()
 
 
-def HostName():
+def getHostName():
     return socket.gethostname()
 
 
@@ -84,7 +87,6 @@ def Logout_User():
 
 @app.route('/', methods=['GET', 'POST'])
 def User_Auth():
-
     if "user" in session:
         return redirect('/chatroom')
 
@@ -136,15 +138,21 @@ def SignUp_Auth():
         email_id = request.form['user_email_id']
         password = request.form['user_password']
         confirm_password = request.form['confirm_user_password']
+
         country_name = Fetch_CountryName()
-        host_name = HostName()
+
+        host_name = getHostName()
+
+        f = Fernet(key)
+        encrypted_hostname = f.encrypt(b"host_name")
+
         if name != "" and email_id != "" and password != "":
             if email_id in USER_DATA:
                 speak(f'{email_id} already exist please use a different Email-ID')
                 return render_template('sign_up.html')
             elif len(password) >= 8:
                 User_Info = Ampplex_UserAuthentication(
-                    user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=host_name, dateUserJoined=getDateTime(), uniqueId=uniqueId)
+                    user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=encrypted_hostname, dateUserJoined=getDateTime(), uniqueId=uniqueId)
                 db.session.add(User_Info)
                 db.session.commit()
                 print(Ampplex_UserAuthentication.query.all())
@@ -158,12 +166,14 @@ def SignUp_Auth():
 def ChatRoom():
     # Removing the user logined from the recommendation to give proper recommendation
     USER_DATA = Ampplex_UserAuthentication().query.all()
-    if "user" in session:
-        user = session["user"]
-        Index = user[0]
-        USER_DATA.remove(USER_DATA[int(Index)-1])
 
-        return render_template('chatroom.html', UserData=USER_DATA)
+    if len(USER_DATA) > 0:
+        if "user" in session:
+            user = session["user"]
+            Index = user[0]
+            USER_DATA.remove(USER_DATA[int(Index)-1])
+
+            return render_template('chatroom.html', UserData=USER_DATA)
     else:
         return redirect('/')
 
@@ -183,7 +193,9 @@ def MyProfile():
 
 @app.route('/Friend/<string:hostname>')
 def Friend(hostname):
-    print(hostname)
+    f = Fernet(key)
+    decrypted_hostname = f.decrypt(b'hostname')
+    print(decrypted_hostname)
     return render_template('friend.html')
 
 
