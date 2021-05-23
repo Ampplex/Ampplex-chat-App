@@ -15,7 +15,6 @@ class Redirect {
     location.href = "http://192.168.0.5:5000/Friend";
   }
   redirectToChatroom() {
-    // location.href = "http://127.0.0.1:1010/chatroom";
     history.go(-1);
   }
 }
@@ -29,6 +28,7 @@ home.addEventListener("click", () => {
   redirect.redirectToChatroom();
 });
 
+// Settings wheel rotation
 settings.addEventListener("mouseover", () => {
   settings.setAttribute(
     "style",

@@ -27,12 +27,13 @@ from cryptography.fernet import Fernet
 
 
 app = Flask(__name__)
-app.secret_key = "hello world"
+app.secret_key = "dkfgkodfmnklxk jknfjfksnrfro34h8793P:P}{%$$%^.;.,;.<<>>:L::>PL>::{:}{{}__+_+_::>///*-*-;[;[]sfrgdfgth::_+()()*(#$%^&)]},;',.l;``opo`pkpo`jp`p;"
 app.permanent_session_lifetime = timedelta(days=30)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///user_info.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 key = Fernet.generate_key()
+f = Fernet(key)
 
 
 def speak(audio):
@@ -143,8 +144,8 @@ def SignUp_Auth():
 
         host_name = getHostName()
 
-        f = Fernet(key)
-        encrypted_hostname = f.encrypt(b"host_name")
+        encrypted_hostname = f.encrypt(host_name.encode())
+        print("HELLO WORLD ENCRYPTED", encrypted_hostname)
 
         if name != "" and email_id != "" and password != "":
             if email_id in USER_DATA:
@@ -155,7 +156,6 @@ def SignUp_Auth():
                     user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=encrypted_hostname, dateUserJoined=getDateTime(), uniqueId=uniqueId)
                 db.session.add(User_Info)
                 db.session.commit()
-                print(Ampplex_UserAuthentication.query.all())
                 print("[NEW USER SUCCESSFULLY SIGNED-UP]")
                 return redirect('/')
 
@@ -193,8 +193,7 @@ def MyProfile():
 
 @app.route('/Friend/<string:hostname>')
 def Friend(hostname):
-    f = Fernet(key)
-    decrypted_hostname = f.decrypt(b'hostname')
+    decrypted_hostname = f.decrypt(hostname).decode()
     print(decrypted_hostname)
     return render_template('friend.html')
 
