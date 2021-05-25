@@ -1,21 +1,4 @@
-"""
-Copyright (c) Ampplex Technologies Pvt.Ltd. All rights reserved
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-"""
-
-
-from flask import Flask, render_template, request, redirect, session, jsonify
+from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 import pyttsx3
 import requests
@@ -185,27 +168,37 @@ def MyProfile():
         if request.method == 'POST':
             if request.form.get('logout_user'):
                 Logout_User()
-        # Edit = Ampplex_UserAuthentication.query.filter_by(
-        #     sno=1).first()
-        # New_user_name = "Ankesh Kumar"
-        # Edit.user_name = New_user_name
-        # db.session.add(Edit)
-        # db.session.commit()
-        # if "user" in session:
-        #     user = session["user"]
-        #     Index = int(user[0])-1
-        #     USER_DATA = Ampplex_UserAuthentication.query.all()
-        #     splitUserData(USER_DATA)
-        #     session["user"] = USER_DATA[Index]
 
         return render_template('user_profile.html', userInfo=user)
     else:
         return redirect('/')
 
 
-@app.route('/Edit_Profile')
+@app.route('/Edit_Profile', methods=['GET', 'POST'])
 def Edit_Profile():
-    return render_template('edit_profile.html')
+    if "user" in session:
+        if request.method == 'POST':
+            user_name = request.form['user_name'].strip()
+            user_email = request.form['email'].strip()
+            country_name = request.form['country_name'].strip()
+            user = session["user"]
+            Index = (int(user[0]))
+
+            Edit = Ampplex_UserAuthentication.query.filter_by(
+                sno=Index).first()
+            Edit.user_name = user_name
+            Edit.user_email_id = user_email
+            Edit.country_name = country_name
+            db.session.add(Edit)
+            db.session.commit()
+            USER_DATA = Ampplex_UserAuthentication.query.all()
+            splitUserData(USER_DATA)
+            session["user"] = USER_DATA[Index]
+            user = session["user"]
+            return redirect(url_for('MyProfile', userInfo=user))
+
+        return render_template('edit_profile.html', User_Info=session["user"])
+    return redirect('/')
 
 
 @app.route('/Friend/<string:hostname>')

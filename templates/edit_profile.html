@@ -17,7 +17,39 @@
     <div class="edit" style="display: flex; align-items: center; justify-content: center;">
         <div class="card" style="background-color: #fafafa; width: 60%; height: 100%; margin-top: 3rem;">
             <div style="height: 30rem; width: 100%; background-color: rgba(var(--d87,255,255,255),1);">
-                <input">
+                <form action="/Edit_Profile" method="POST">
+                    <div class="heading"
+                        style="display: flex; justify-content: center; align-items: center; margin-top: 1rem;">
+                        <h4>Edit Profile</h4>
+                    </div>
+                    <div class="name"
+                        style="display: flex; justify-content: center; align-items: center; margin-top: 30px;">
+                        <label for="user_name" style="font-weight: 500;">Name</label>
+                        <input name="user_name" class="form-control" style="width: 50%; margin-left: 1rem;"
+                            value="{{User_Info[1]}}">
+                    </div>
+                    <div class="email"
+                        style="display: flex; justify-content: center; align-items: center; margin-top: 30px;">
+                        <label for="email" style="font-weight: 500;">Email</label>
+                        <input name="email" class="form-control" style="width: 50%; margin-left: 1rem;"
+                            value="{{User_Info[2]}}">
+                    </div>
+                    <div class="country_name"
+                        style="display: flex; justify-content: center; align-items: center; margin-top: 30px;">
+                        <label for="country_name" style="font-weight: 500;margin-right: 1rem;">Country
+                            name</label>
+                        <input name="country_name" class="form-control" style="width: 50%; margin-right: 3.8rem;"
+                            value="{{User_Info[3]}}">
+                    </div>
+                    <div class="submit-btn"
+                        style="display: flex; justify-content: center; align-items: center; margin-top: 2rem;">
+
+                        <button class="btn btn-default" style="background-color: #0095f6; padding-bottom: 0.4rem;"
+                            type="submit">
+                            <h6 style="color: white;">Submit</h6>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
