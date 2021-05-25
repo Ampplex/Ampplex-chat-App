@@ -17,15 +17,25 @@ class Redirect {
   redirectToChatroom() {
     history.go(-1);
   }
+  redirectToEditProfile() {
+    location.href = "http://192.168.0.5:5000/Edit_Profile";
+  }
 }
 
 let redirect = new Redirect();
 
-let home = document.getElementById("home");
-let settings = document.getElementById("settings");
+const home = document.getElementById("home");
+const settings = document.getElementById("settings");
+const edit_profile = document.getElementById("edit-profile");
 
 home.addEventListener("click", () => {
   redirect.redirectToChatroom();
+});
+
+// When user clicks on edit profile then redirecting to edit profile page
+
+edit_profile.addEventListener("click", () => {
+  redirect.redirectToEditProfile();
 });
 
 // Settings wheel rotation

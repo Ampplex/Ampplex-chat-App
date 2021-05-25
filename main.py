@@ -15,7 +15,7 @@ limitations under the License.
 """
 
 
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import pyttsx3
 import requests
@@ -185,10 +185,27 @@ def MyProfile():
         if request.method == 'POST':
             if request.form.get('logout_user'):
                 Logout_User()
+        # Edit = Ampplex_UserAuthentication.query.filter_by(
+        #     sno=1).first()
+        # New_user_name = "Ankesh Kumar"
+        # Edit.user_name = New_user_name
+        # db.session.add(Edit)
+        # db.session.commit()
+        # if "user" in session:
+        #     user = session["user"]
+        #     Index = int(user[0])-1
+        #     USER_DATA = Ampplex_UserAuthentication.query.all()
+        #     splitUserData(USER_DATA)
+        #     session["user"] = USER_DATA[Index]
 
         return render_template('user_profile.html', userInfo=user)
     else:
         return redirect('/')
+
+
+@app.route('/Edit_Profile')
+def Edit_Profile():
+    return render_template('edit_profile.html')
 
 
 @app.route('/Friend/<string:hostname>')
