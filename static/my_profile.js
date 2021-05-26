@@ -15,7 +15,8 @@ class Redirect {
     location.href = "http://192.168.0.5:5000/Friend";
   }
   redirectToChatroom() {
-    history.go(-1);
+    // history.go(-1);
+    location.href = "http://192.168.0.5:5000/chatroom";
   }
   redirectToEditProfile() {
     location.href = "http://192.168.0.5:5000/Edit_Profile";

@@ -193,7 +193,7 @@ def Edit_Profile():
             db.session.commit()
             USER_DATA = Ampplex_UserAuthentication.query.all()
             splitUserData(USER_DATA)
-            session["user"] = USER_DATA[Index]
+            session["user"] = USER_DATA[Index-1]
             user = session["user"]
             return redirect(url_for('MyProfile', userInfo=user))
 
