@@ -1,20 +1,20 @@
 class Redirect {
   redirectToSignUpPage() {
     // Redirecting to SignUp Page
-    location.href = "http://192.168.0.5:5000/SignUp";
+    location.href = "http://192.168.0.5:7777/SignUp";
   }
   redirectToLoginPage() {
     // Redirecting to Login Page
-    location.href = "http://192.168.0.5:5000/";
+    location.href = "http://192.168.0.5:7777/";
   }
   redirectToUserProfile() {
-    location.href = "http://192.168.0.5:5000/MyProfile";
+    location.href = "http://192.168.0.5:7777/MyProfile";
   }
   redirectToFriendPage() {
-    location.href = "http://192.168.0.5:5000/Friend";
+    location.href = "http://192.168.0.5:7777/Friend";
   }
   redirectToChatroom() {
-    location.href = "http://192.168.0.5:5000/chatroom";
+    location.href = "http://192.168.0.5:7777/chatroom";
   }
 }
 

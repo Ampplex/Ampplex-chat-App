@@ -1,11 +1,11 @@
 class Redirect {
   redirectToSignUpPage() {
     // Redirecting to SignUp Page
-    location.href = "http://192.168.0.5:5000/SignUp";
+    location.href = "http://192.168.0.5:7777/SignUp";
   }
   redirectToLoginPage() {
     // Redirecting to Login Page
-    location.href = "http://192.168.0.5:5000/";
+    location.href = "http://192.168.0.5:7777/";
   }
 }
 

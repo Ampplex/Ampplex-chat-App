@@ -32,7 +32,7 @@
         </div>
         <div class="user" style="margin-top: 6rem;">
             {% for individual in UserData %}
-            <div class="shadow p-3 mb-3 bg-body rounded" id={{individual.host_name}}
+            <div class="shadow p-3 mb-3 bg-body rounded" id={{individual.uniqueId + individual.sno | string}}
                 style="width: 50%; display: flex; align-self: center; margin-left: 10rem; animation-name: AnimateUsers; animation-duration: 1.6s; animation-iteration-count: 1;">
                 <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
                     width="10%" height="10%" style="border-radius: 30rem; margin-bottom: 1rem;">
@@ -80,16 +80,16 @@
             }
             redirectToLoginPage() {
                 // Redirecting to Login Page
-                location.href = "http://192.168.0.5:5000/";
+                location.href = "http://192.168.0.5:7777/";
             }
             redirectToUserProfile() {
-                location.href = "http://192.168.0.5:5000/MyProfile";
+                location.href = "http://192.168.0.5:7777/MyProfile";
             }
             redirectToFriendPage(hostname) {
-                location.href = "http://192.168.0.5:5000/Friend/" + hostname;
+                location.href = "http://192.168.0.5:7777/Friend/" + hostname;
             }
             redirectToChatroom() {
-                location.href = "http://192.168.0.5:5000/chatroom";
+                location.href = "http://192.168.0.5:7777/chatroom";
             }
         }
 

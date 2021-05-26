@@ -61,7 +61,14 @@ def splitUserData(USER_DATA):
     # FoundSno = 0  # Storing the Sno of the user to use the data in the chat app after login
     for i in range(len(USER_DATA)):
         USER_DATA[i] = str(USER_DATA[i]).split(',')
-    return USER_DATA
+
+
+def Fetch_Host_Name(index):
+    """
+    Takes sno and fetches the hostname
+    """
+    USERS_DATA = Ampplex_UserAuthentication.query.filter_by(sno=index).first()
+    return USERS_DATA.host_name
 
 
 def Logout_User():
@@ -127,8 +134,8 @@ def SignUp_Auth():
 
         host_name = getHostName()
 
-        encrypted_hostname = f.encrypt(host_name.encode())
-        print("HELLO WORLD ENCRYPTED", encrypted_hostname)
+        # encrypted_hostname = f.encrypt(host_name.encode())
+        print("HELLO WORLD ENCRYPTED", host_name)
 
         if name != "" and email_id != "" and password != "":
             if email_id in USER_DATA:
@@ -136,7 +143,7 @@ def SignUp_Auth():
                 return render_template('sign_up.html')
             elif len(password) >= 8:
                 User_Info = Ampplex_UserAuthentication(
-                    user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=encrypted_hostname, dateUserJoined=getDateTime(), uniqueId=uniqueId)
+                    user_name=name, user_email_id=email_id, user_password=password, country_name=country_name, host_name=host_name, dateUserJoined=getDateTime(), uniqueId=uniqueId)
                 db.session.add(User_Info)
                 db.session.commit()
                 print("[NEW USER SUCCESSFULLY SIGNED-UP]")
@@ -201,12 +208,14 @@ def Edit_Profile():
     return redirect('/')
 
 
-@app.route('/Friend/<string:hostname>')
-def Friend(hostname):
-    decrypted_hostname = f.decrypt(hostname).decode()
-    print(decrypted_hostname)
+@app.route('/Friend/<string:sno>')
+def Friend(sno):
+    Index = sno[-1]
+    hostname = Fetch_Host_Name(Index)
+    print('HOST NAME', hostname)
     return render_template('friend.html')
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    speak("SERVER STARTED")
+    app.run(debug=True, host='0.0.0.0', port=7777)
