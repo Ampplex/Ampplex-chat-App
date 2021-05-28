@@ -16,33 +16,46 @@
     <div class="circle"
         style="background-color: white; border-radius: 100%; position: absolute; width: 60%; height: 125%;" />
 
-    <form action="/Friend/{{sno}}" method="POST">
-        <div class="chat-box">
-            <input class="form-control" name="message" placeholder="Type a message" autocomplete="off"
-                style="width: 50%; border-radius: 10rem; height: 65%; border-color: white; scroll-behavior: smooth; box-shadow: 0px 0px 0px 0px;">
-        </div>
-        <div class="emoji-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-emoji-smile"
-                style="position: absolute;" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path
-                    d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
-            </svg>
-        </div>
-        <div class="send-icon">
-            <button class="btn btn-danger"
-                style="background: url(../static/send.png); width: 25px; height: 29px; border-color: white; outline: none;; box-shadow: none; outline: none;"
-                type="submit"></button>
-        </div>
-    </form>
+    <div class="shadow p-3 mb-5 bg-white rounded"
+        style="background-color: rgb(123, 125, 201); border-radius: 10rem; width: 35%; display: flex; justify-content: center; align-items: center; margin-left: 40rem; position: absolute; top: 2rem;">
+        <p>Your chats are end to end encrypted</p>
+    </div>
+
+    <div class="container" style="display: flex; justify-content: center; align-items: center;">
+        <form action="/Friend/{{sno}}" method="POST">
+            <footer>
+                <div class="chat-box">
+                    <!-- <div class="shadow p-3 mb-5 bg-white rounded"> -->
+                    <input class="form-control" name="message" placeholder="Type a message" autocomplete="off"
+                        style="width: 50%; border-radius: 10rem; height: 65%; border-color: white; scroll-behavior: smooth; box-shadow: 0px 0px 0px 0px;">
+                    <!-- </div> -->
+                </div>
+
+                <div class="emoji-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                        class="bi bi-emoji-smile" style="position: absolute;" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
+                    </svg>
+                </div>
+                <div class="send-icon">
+                    <button class="btn btn-danger"
+                        style="background: url(../static/send.png); width: 25px; height: 29px; border-color: white; outline: none;; box-shadow: none; outline: none;"
+                        type="submit"></button>
+                </div>
+            </footer>
+        </form>
+    </div>
 
     <style>
         .chat-box {
             background-color: rgb(240, 240, 240);
             width: 100%;
             height: 10%;
-            position: absolute;
-            margin-top: 42.5rem;
+            /* position: absolute; */
+            margin-top: 42.6rem;
+            margin-left: -28.5rem;
             position: fixed;
             display: flex;
             justify-content: center;
@@ -63,7 +76,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-left: 77rem;
+            margin-left: 48rem;
             position: absolute;
             top: 44rem;
             position: fixed;

@@ -1,7 +1,6 @@
 import socket
 import threading
 import pyttsx3
-from plyer import notification
 
 HEADER = 64
 PORT = 5050
@@ -21,19 +20,9 @@ def speak(audio):
     pyttsx3.speak(audio)
 
 
-def notify_user(addr):
-    notification.notify(
-        title="New Connection",
-        message=f"{addr}",
-        app_icon=None,
-        timeout=7
-    )
-
-
 def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected.")
     speak("New Connection")
-    notify_user(addr)
     connected = True
     while connected:
         msg_length = conn.recv(HEADER).decode(FORMAT)
