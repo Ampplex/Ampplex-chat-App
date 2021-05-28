@@ -210,7 +210,8 @@ def Friend(sno):
     Index = sno[-1]
     hostname = Fetch_Host_Name(Index)
     print('HOST NAME', hostname)
-    return render_template('friend.html')
+    return render_template('friend.html', user_name=Ampplex_UserAuthentication.query.filter_by(
+        sno=Index).first().user_name)
 
 
 if __name__ == '__main__':
