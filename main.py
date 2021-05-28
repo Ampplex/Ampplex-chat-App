@@ -23,7 +23,6 @@ def speak(audio):
     engine = pyttsx3.init('sapi5')
     voices = engine.getProperty('voices')
     engine.setProperty('voice', voices[1].id)
-    pyttsx3.speak(audio)
     engine.say(audio)
     engine.runAndWait()
 
@@ -205,13 +204,16 @@ def Edit_Profile():
     return redirect('/')
 
 
-@app.route('/Friend/<string:sno>')
+@app.route('/Friend/<string:sno>', methods=['GET', 'POST'])
 def Friend(sno):
     Index = sno[-1]
     hostname = Fetch_Host_Name(Index)
-    print('HOST NAME', hostname)
+    if request.method == 'POST':
+        message = request.form['message']
+        print(message)
+
     return render_template('friend.html', user_name=Ampplex_UserAuthentication.query.filter_by(
-        sno=Index).first().user_name)
+        sno=Index).first().user_name, sno=sno)
 
 
 if __name__ == '__main__':
