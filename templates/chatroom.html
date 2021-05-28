@@ -32,7 +32,7 @@
         </div>
         <div class="user" style="margin-top: 6rem;">
             {% for individual in UserData %}
-            <div class="shadow p-3 mb-3 bg-body rounded" id={{individual.uniqueId + individual.sno | string}}
+            <div class="shadow-sm p-3 mb-5 bg-body rounded" id={{individual.uniqueId + individual.sno | string}}
                 style="width: 50%; display: flex; align-self: center; margin-left: 10rem; animation-name: AnimateUsers; animation-duration: 1.6s; animation-iteration-count: 1;">
                 <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
                     width="10%" height="10%" style="border-radius: 30rem; margin-bottom: 1rem;">
@@ -118,6 +118,14 @@
         for (let i = 0; i < users.children.length; i++) {
             users.children[i].addEventListener("click", () => {
                 redirect.redirectToFriendPage(users.children[i].id);
+            });
+
+            let user = document.getElementById(users.children[i].id);
+            users.children[i].addEventListener("mouseover", () => {
+                user.setAttribute("class", "shadow-lg p-3 mb-5 bg-white rounded")
+            });
+            users.children[i].addEventListener("mouseleave", () => {
+                user.setAttribute("class", "shadow-sm p-3 mb-5 bg-body rounded")
             });
         }
 

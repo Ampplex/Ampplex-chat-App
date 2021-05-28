@@ -134,9 +134,6 @@ def SignUp_Auth():
 
         host_name = getHostName()
 
-        # encrypted_hostname = f.encrypt(host_name.encode())
-        print("HELLO WORLD ENCRYPTED", host_name)
-
         if name != "" and email_id != "" and password != "":
             if email_id in USER_DATA:
                 speak(f'{email_id} already exist please use a different Email-ID')
