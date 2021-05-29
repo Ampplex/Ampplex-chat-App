@@ -13,6 +13,8 @@
 
 <body style="background-color: #f0f0f0;">
 
+    <div class="unique-id" id="{{sno}}" />
+
     <div class="circle"
         style="background-color: white; border-radius: 100%; position: absolute; width: 60%; height: 125%;" />
 
@@ -21,12 +23,13 @@
         <p>Your chats are end to end encrypted</p>
     </div>
 
-    <div class="container" style="display: flex; justify-content: center; align-items: center;">
+    <div class="container" style="display: flex; justify-content: center; align-items: center; position: absolute;">
         <form action="/Friend/{{sno}}" method="POST">
             <footer>
                 <div class="chat-box">
                     <!-- <div class="shadow p-3 mb-5 bg-white rounded"> -->
-                    <input class="form-control" name="message" placeholder="Type a message" autocomplete="off"
+                    <input class="form-control" name="message" id="message" placeholder="Type a message"
+                        autocomplete="off"
                         style="width: 50%; border-radius: 10rem; height: 65%; border-color: white; scroll-behavior: smooth; box-shadow: 0px 0px 0px 0px;">
                     <!-- </div> -->
                 </div>
@@ -40,7 +43,7 @@
                     </svg>
                 </div>
                 <div class="send-icon">
-                    <button class="btn btn-danger"
+                    <button class="btn btn-danger" id="send-btn"
                         style="background: url(../static/send.png); width: 25px; height: 29px; border-color: white; outline: none;; box-shadow: none; outline: none;"
                         type="submit"></button>
                 </div>
@@ -53,10 +56,9 @@
             background-color: rgb(240, 240, 240);
             width: 100%;
             height: 10%;
-            /* position: absolute; */
-            margin-top: 42.6rem;
-            margin-left: -28.5rem;
             position: fixed;
+            bottom: 0rem;
+            left: 0rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -66,9 +68,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            position: absolute;
-            left: 22.5rem;
-            top: 45rem;
+            left: 22rem;
+            bottom: 0rem;
+            margin-bottom: 2.7rem;
             position: fixed;
         }
 
@@ -76,9 +78,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-left: 48rem;
-            position: absolute;
-            top: 44rem;
+            bottom: 1.5rem;
+            right: 22.5rem;
             position: fixed;
         }
     </style>
@@ -94,6 +95,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
         integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
         crossorigin="anonymous"></script>
+
+    <script src="../static/friend.js"></script>
+
 </body>
 
 </html>
