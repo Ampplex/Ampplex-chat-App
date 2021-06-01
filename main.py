@@ -210,7 +210,6 @@ def Friend(sno):
     hostname = Fetch_Host_Name(Index)
     if request.method == 'POST':
         message = request.form['message']
-        print(message)
 
     return render_template('friend.html', user_name=Ampplex_UserAuthentication.query.filter_by(
         sno=Index).first().user_name, sno=sno)
