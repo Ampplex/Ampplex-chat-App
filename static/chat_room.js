@@ -18,20 +18,6 @@ class Redirect {
   }
 }
 
-function speak(audio) {
-  let speech = new SpeechSynthesisUtterance();
-  speech.lang = "en-US";
-  speech.text = audio;
-  speech.volume = 1;
-  speech.rate = 1;
-  speech.pitch = 1;
-
-  window.speechSynthesis.speak(speech);
-}
-
-speak("Welcome to Ampplex Chat Room");
-console.log("{{UserData}}");
-
 let redirect = new Redirect();
 
 const Profile = document.getElementById("MyProfile-Btn");
